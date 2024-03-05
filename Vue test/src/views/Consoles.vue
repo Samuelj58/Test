@@ -1,6 +1,6 @@
 <template>
-  <div class="homepage">
-    <h1>Consoles</h1>
+<div class="homepage">
+  <header><h1>Consoles</h1></header>
     <div class="consoles">
       <div v-for="(console, index) in consoles" :key="index" class="console">
         <h3>{{ console.name }}</h3>
@@ -10,7 +10,9 @@
       </div>
     </div> 
     <div class="cart">
-      <h1>Shopping Cart</h1>
+      <header><h1>Shopping Cart</h1></header>
+      
+      <div>Total: {{ total }}</div>
       <div class="cart">
         <div v-for="(console, index) in cartItems" :key="index" class="cart-item">
           <h3>{{ console.name }}</h3>
@@ -18,6 +20,7 @@
           <div class="cost">{{ console.price }}</div>
           <button @click="removeItemFromCart(console)">Remove from cart</button>
         </div>
+        
       </div>
     </div>
   </div>
@@ -134,6 +137,11 @@ export default {
       ],
       cartItems: []
     };
+  },
+  computed: {
+    total() {
+      return this.cartItems.reduce((total, console) => total + parseFloat(console.price.slice(1)), 0).toFixed(2);
+    }
   },
   methods: {
     addItemToCart(console) {
